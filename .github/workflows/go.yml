@@ -30,7 +30,7 @@ jobs:
          echo "VERSION=$VER" >> $GITHUB_ENV
     - name: zip project # This would actually build your project, using zip for an example artifact
       run: |
-          zip --junk-paths ./../../gen-dockercfg
+          zip --junk-paths gen-dockercfg
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
