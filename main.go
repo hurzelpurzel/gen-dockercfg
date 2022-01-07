@@ -75,6 +75,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Print(dockerConfigJSONContent)
+	fmt.Print(string(dockerConfigJSONContent))
 	os.Exit(0)
 }
