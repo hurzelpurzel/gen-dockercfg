@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
 
@@ -21,19 +21,24 @@ jobs:
     - name: Build
       run: go build -v ./...
 
+ 
     - name: Test
       run: go test -v ./...
+    - name: Set version variable
+      run: |
+         VER=$( cat VERSION.txt )
+         echo "VERSION=$VER" >> $GITHUB_ENV
     - name: zip project # This would actually build your project, using zip for an example artifact
       run: |
-          zip --junk-paths gen-dockercfg README.md
+          zip --junk-paths gen-dockercfg gen-dockercfg
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
           draft: false
           prerelease: false
     - name: Upload Release Asset
